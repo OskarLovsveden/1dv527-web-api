@@ -15,6 +15,15 @@ app.use(express.urlencoded({
 
 app.use('/', (req, res) => res.send('test'))
 
+// POST /users - add user
+// POST /login
+// POST /logout
+
+// GET /fishes - gets all catches
+// POST /fishes - adds new catch
+// PUT /fishes/:id - updates info on a catch
+// DELETE /fishes/:id - deletes catch
+
 const PORT = 8000
 app.listen(PORT, () => {
     console.log(`Server started on http://localhost:${PORT}`)
