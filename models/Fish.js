@@ -1,13 +1,19 @@
 const mongoose = require('mongoose')
 
-const catchSchema = new mongoose.Schema({
+const fishSchema = new mongoose.Schema({
     username: {
         type: String,
         required: true
     },
     position: {
-        type: String,
-        required: true
+        latitude: {
+            type: String,
+            required: true
+        },
+        longitude: {
+            type: String,
+            required: true
+        }
     },
     bodyOfWater: {
         type: String,
@@ -38,6 +44,6 @@ const catchSchema = new mongoose.Schema({
     timestamps: true
 })
 
-const Catch = mongoose.model('Catch', catchSchema)
+const Fish = mongoose.model('Fish', fishSchema)
 
-module.exports = Catch
+module.exports = Fish
