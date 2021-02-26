@@ -11,5 +11,8 @@
     "url": "git@gitlab.lnu.se:1dv527/student/ol222hf/web-api-assignment.git"
   },
   "author": "Oskar Lövsveden | ol222hf",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "mongoose": "^5.11.18"
+  }
 }
