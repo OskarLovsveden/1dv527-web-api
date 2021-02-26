@@ -4,16 +4,16 @@ const express = require('express')
 const mongoose = require('./config/mongoose')
 const app = express()
 
-mongoose.connect().catch(error => {
-    console.error(error)
-    process.exit(1)
-})
+// mongoose.connect().catch(error => {
+//     console.error(error)
+//     process.exit(1)
+// })
 
 app.use(express.urlencoded({
     extended: false
 }))
 
-app.use('/', (req, res, next) => res.send('test'))
+app.use('/', (req, res) => res.send('test'))
 
 const PORT = 8000
 app.listen(PORT, () => {
