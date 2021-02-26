@@ -1,0 +1,15 @@
+{
+  "name": "web-api-assignment",
+  "version": "1.0.0",
+  "description": "1dv527 web-api ol222hf",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@gitlab.lnu.se:1dv527/student/ol222hf/web-api-assignment.git"
+  },
+  "author": "Oskar Lövsveden | ol222hf",
+  "license": "ISC"
+}
