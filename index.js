@@ -21,23 +21,23 @@ const main = async () => {
         err.status = err.status || 500
 
         if (req.app.get('env') !== 'development') {
-            res
-                .status(err.status)
-                .json({
-                    status: err.status,
-                    message: err.message
-                })
+            res.status(err.status)
+            res.json({
+                status: err.status,
+                message: err.message
+            })
             return
         }
 
+        res.status(err.status)
+        res.json({
+            status: err.status,
+            message: err.message,
+            innerException: err.innerException,
+            stack: err.stack
+        })
+
         return res
-            .status(err.status)
-            .json({
-                status: err.status,
-                message: err.message,
-                innerException: err.innerException,
-                stack: err.stack
-            })
     })
 
     app.listen(process.env.PORT, () => {
