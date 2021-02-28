@@ -4,7 +4,9 @@
   "description": "1dv527 web-api ol222hf",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "node index.js",
+    "start:dev": "nodemon --inspect -r dotenv/config index.js",
+    "seed": "node seeder.js"
   },
   "repository": {
     "type": "git",
@@ -14,8 +16,15 @@
   "license": "ISC",
   "dependencies": {
     "bcryptjs": "^2.4.3",
-    "dotenv": "^8.2.0",
+    "cors": "^2.8.5",
     "express": "^4.17.1",
-    "mongoose": "^5.11.18"
+    "helmet": "^4.4.1",
+    "http-errors": "^1.8.0",
+    "mongoose": "^5.11.18",
+    "morgan": "^1.10.0"
+  },
+  "devDependencies": {
+    "dotenv": "^8.2.0",
+    "nodemon": "^2.0.7"
   }
 }
