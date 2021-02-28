@@ -18,3 +18,10 @@ export const connectDB = async () => {
         useUnifiedTopology: true
     })
 }
+
+export const disconnectDB = async () => {
+    mongoose.connection.close(() => {
+        console.log('Mongoose is disconnected.')
+        process.exit(0)
+    })
+}
