@@ -1,31 +1,49 @@
-require('dotenv').config()
+import express from 'express'
+import cors from 'cors'
+import helmet from 'helmet'
+import logger from 'morgan'
+import { router } from './routes/router.js'
+import { connectDB } from './config/mongoose'
 
-const express = require('express')
-const mongoose = require('./config/mongoose')
-const app = express()
+const main = async () => {
+    await connectDB()
 
-// mongoose.connect().catch(error => {
-//     console.error(error)
-//     process.exit(1)
-// })
+    const app = express()
 
-app.use(express.urlencoded({
-    extended: false
-}))
+    app.use(helmet())
+    app.use(cors())
+    app.use(logger('dev'))
+    app.use(express.json())
 
-app.use('/', (req, res) => res.send('test'))
+    app.use('/', router)
 
-// POST /users - add user
-// POST /login
-// POST /logout
+    app.use((err, req, res) => {
+        err.status = err.status || 500
 
-// GET /fishes - gets all catches
-// POST /fishes - adds new catch
-// PUT /fishes/:id - updates info on a catch
-// DELETE /fishes/:id - deletes catch
+        if (req.app.get('env') !== 'development') {
+            res
+                .status(err.status)
+                .json({
+                    status: err.status,
+                    message: err.message
+                })
+            return
+        }
 
-const PORT = 8000
-app.listen(PORT, () => {
-    console.log(`Server started on http://localhost:${PORT}`)
-    console.log('Press Ctrl-C to terminate...')
-})
+        return res
+            .status(err.status)
+            .json({
+                status: err.status,
+                message: err.message,
+                innerException: err.innerException,
+                stack: err.stack
+            })
+    })
+
+    app.listen(process.env.PORT, () => {
+        console.log(`Server started on http://localhost:${process.env.PORT}`)
+        console.log('Press Ctrl-C to terminate...')
+    })
+}
+
+main().catch(console.error)
