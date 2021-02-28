@@ -1,41 +1,38 @@
-import { connectDB } from '../config/mongoose.js'
+import { uniqueNamesGenerator, names } from 'unique-names-generator';
+import { connectDB, disconnectDB } from '../config/mongoose.js'
 import { Animal } from '../models/Animal.js'
 
+const config = {
+    dictionaries: [names]
+}
+
+const animals = [...Array(20)].map(() => ({
+    rescuer: uniqueNamesGenerator(config),
+    name: uniqueNamesGenerator(config),
+    position: {
+        latitude: 1.2345,
+        longitude: 6.7890
+    },
+    facility: "Farm AB",
+    city: "Kalmar",
+    species: "Cow",
+    weight: 750,
+    length: 2.6,
+    image: null
+}))
+
 const seed = async () => {
+
+    console.log("Seeding started")
     await connectDB()
 
-    const animals = [{
-        rescuer: "Nisse",
-        name: "Daisy",
-        position: {
-            latitude: 1.2345,
-            longitude: 6.7890
-        },
-        facility: "Farm AB",
-        city: "Kalmar",
-        species: "Cow",
-        weight: 750,
-        length: 2.6,
-        image: null
-    },
-    {
-        rescuer: "Ellen",
-        name: "Bert",
-        position: {
-            latitude: 5.4321,
-            longitude: .9876
-        },
-        facility: "Slakteri AB",
-        city: "Malmö",
-        species: "Pig",
-        weight: 300,
-        length: 1.5,
-        image: null
-    }]
+    animals.forEach(async (a, index) => {
+        await Animal.create(a)
 
-    animals.forEach(async a => {
-        const animal = new Animal(a)
-        await animal.save()
+        if (index = animals.length - 1) {
+            console.log("Seeding done")
+            await disconnectDB()
+        }
     })
 }
 
