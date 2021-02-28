@@ -1,12 +1,13 @@
 {
   "name": "web-api-assignment",
   "version": "1.0.0",
-  "description": "1dv527 web-api ol222hf",
+  "description": "1dv527 web-api",
+  "type": "module",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
     "start:dev": "nodemon --inspect -r dotenv/config index.js",
-    "seed": "node seeder.js"
+    "start:seed": "node -r dotenv/config seed-script/seeder.js"
   },
   "repository": {
     "type": "git",

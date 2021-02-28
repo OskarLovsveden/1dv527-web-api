@@ -3,7 +3,7 @@ import cors from 'cors'
 import helmet from 'helmet'
 import logger from 'morgan'
 import { router } from './routes/router.js'
-import { connectDB } from './config/mongoose'
+import { connectDB } from './config/mongoose.js'
 
 const main = async () => {
     await connectDB()

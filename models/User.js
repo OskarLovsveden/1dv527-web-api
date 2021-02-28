@@ -1,7 +1,7 @@
-import { Schema, model } from 'mongoose'
+import mongoose from 'mongoose'
 import bcrypt from 'bcryptjs'
 
-const userSchema = new Schema({
+const userSchema = new mongoose.Schema({
     username: {
         type: String,
         required: true,
@@ -31,4 +31,4 @@ userSchema.statics.authenticate = async function (username, password) {
     return user
 }
 
-export const User = model('User', userSchema)
+export const User = mongoose.model('User', userSchema)

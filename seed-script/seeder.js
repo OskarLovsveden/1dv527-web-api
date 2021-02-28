@@ -1,5 +1,5 @@
-import { connectDB } from './config/mongoose'
-import { Animal } from './models/Animal.js'
+import { connectDB } from '../config/mongoose.js'
+import { Animal } from '../models/Animal.js'
 
 const seed = async () => {
     await connectDB()
@@ -8,8 +8,8 @@ const seed = async () => {
         rescuer: "Nisse",
         name: "Daisy",
         position: {
-            latitude: 12345,
-            longitude: 67890
+            latitude: 1.2345,
+            longitude: 6.7890
         },
         facility: "Farm AB",
         city: "Kalmar",
@@ -22,8 +22,8 @@ const seed = async () => {
         rescuer: "Ellen",
         name: "Bert",
         position: {
-            latitude: 54321,
-            longitude: 09876
+            latitude: 5.4321,
+            longitude: .9876
         },
         facility: "Slakteri AB",
         city: "Malmö",
