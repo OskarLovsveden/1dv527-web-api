@@ -1,7 +1,11 @@
-const mongoose = require('mongoose')
+import { Schema, model } from 'mongoose'
 
-const fishSchema = new mongoose.Schema({
-    username: {
+const animalSchema = new Schema({
+    rescuer: {
+        type: String,
+        required: true
+    },
+    name: {
         type: String,
         required: true
     },
@@ -15,7 +19,7 @@ const fishSchema = new mongoose.Schema({
             required: true
         }
     },
-    bodyOfWater: {
+    facility: {
         type: String,
         required: true
     },
@@ -35,15 +39,11 @@ const fishSchema = new mongoose.Schema({
         type: Number,
         required: true
     },
-    links: {
-        img: {
-            type: String
-        }
+    image: {
+        type: String
     }
 }, {
     timestamps: true
 })
 
-const Fish = mongoose.model('Fish', fishSchema)
-
-module.exports = Fish
+export const Animal = model('Animal', animalSchema)
