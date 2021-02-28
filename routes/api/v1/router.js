@@ -1,14 +1,14 @@
 import express from 'express'
-// import { router as accountRouter } from './account-router.js'
+import { router as accountRouter } from './account-router.js'
+import { router as usersRouter } from './user-router.js'
 // import { router as tasksRouter } from './tasks-router.js'
-// import { router as usersRouter } from './users-router.js'
 
 export const router = express.Router()
 
 router.get('/', (req, res) => res.json({ message: 'Lovsveden API v1' }))
-// router.use('/', accountRouter)
+router.use('/', accountRouter)
+router.use('/users', usersRouter)
 // router.use('/animals', animalsRouter)
-// router.use('/users', usersRouter)
 
 // TODO
 
