@@ -1,6 +1,6 @@
 import mongoose from 'mongoose'
 
-const animalSchema = new mongoose.Schema({
+const schema = new mongoose.Schema({
     rescuer: {
         type: String,
         required: true
@@ -44,7 +44,25 @@ const animalSchema = new mongoose.Schema({
         type: String
     }
 }, {
-    timestamps: true
+    toJSON: {
+        transform: (doc, ret) => delete ret._id,
+        virtuals: true
+    },
+    timestamps: true,
+    versionKey: false
 })
 
-export const Animal = mongoose.model('Animal', animalSchema)
+schema.virtual('id').get(() => {
+    return this._id.toHexString()
+})
+
+schema.statics.getById = async function (id) {
+    return this.findOne({ _id: id });
+}
+
+schema.statics.insert = async function (animalData) {
+    const animal = new Animal(animalData)
+    return animal.save()
+}
+
+export const Animal = mongoose.model('Animal', schema)
