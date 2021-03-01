@@ -47,6 +47,10 @@ export class AnimalController {
         try {
             const animal = await Animal.insert(this.getReqAnimalData(req))
 
+            // Trigger event for webhook
+            const event = req.app.get('EventEmitter')
+            event.emit('new-animal', animal)
+
             res.status(201)
             res.json(animal)
         } catch (error) {
