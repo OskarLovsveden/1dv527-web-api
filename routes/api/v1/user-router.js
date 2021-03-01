@@ -5,5 +5,5 @@ export const router = express.Router()
 
 const controller = new UserController()
 
-router.get('/', (req, res, next) => res.json('nah dude'))
-router.post('/', (req, res, next) => controller.register(req, res, next))
+router.param('id', (req, res, next, id) => controller.loadUser(req, res, next, id))
+router.get('/:id', (req, res, next) => controller.find(req, res, next))
