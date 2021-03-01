@@ -6,7 +6,6 @@ export class AccountController {
 
     async register(req, res, next) {
         try {
-            console.log(req.body)
             const user = await User.insert({
                 username: req.body.username,
                 password: req.body.password
@@ -38,7 +37,8 @@ export class AccountController {
             // Create the access token with the shorter lifespan.
             const accessToken = jwt.sign(payload, process.env.ACCESS_TOKEN_SECRET, {
                 algorithm: 'HS256',
-                expiresIn: process.env.ACCESS_TOKEN_LIFE
+                expiresIn: '1h'
+                // expiresIn: process.env.ACCESS_TOKEN_LIFE
             })
 
             // // Create the refresh token with the longer lifespan.
