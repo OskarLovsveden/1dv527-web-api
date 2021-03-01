@@ -10,20 +10,6 @@ const schema = new mongoose.Schema({
         required: true,
         unique: true
     },
-    position: {
-        latitude: {
-            type: String,
-            required: true
-        },
-        longitude: {
-            type: String,
-            required: true
-        }
-    },
-    facility: {
-        type: String,
-        required: true
-    },
     city: {
         type: String,
         required: true
@@ -31,17 +17,6 @@ const schema = new mongoose.Schema({
     species: {
         type: String,
         required: true
-    },
-    weight: {
-        type: Number,
-        required: true
-    },
-    length: {
-        type: Number,
-        required: true
-    },
-    image: {
-        type: String
     }
 }, {
     timestamps: true,

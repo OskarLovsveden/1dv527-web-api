@@ -80,16 +80,8 @@ export class AnimalController {
         return {
             rescuer: req.user.username,
             name: req.body.name,
-            position: {
-                latitude: req.body.position.latitude,
-                longitude: req.body.position.longitude
-            },
-            facility: req.body.facility,
             city: req.body.city,
-            species: req.body.species,
-            weight: req.body.weight,
-            length: req.body.length,
-            image: req.body.image
+            species: req.body.species
         }
     }
 }
