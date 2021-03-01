@@ -9,16 +9,8 @@ const config = {
 const animals = [...Array(20)].map(() => ({
     rescuer: uniqueNamesGenerator(config),
     name: uniqueNamesGenerator(config),
-    position: {
-        latitude: 1.2345,
-        longitude: 6.7890
-    },
-    facility: "Farm AB",
     city: "Kalmar",
-    species: "Cow",
-    weight: 750,
-    length: 2.6,
-    image: null
+    species: "Cow"
 }))
 
 const seed = async () => {
