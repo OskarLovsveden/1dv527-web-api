@@ -1,3 +1,4 @@
+import { EventEmitter } from 'events'
 import express from 'express'
 import cors from 'cors'
 import helmet from 'helmet'
@@ -39,6 +40,8 @@ const main = async () => {
 
         return res
     })
+
+    app.set('EventEmitter', new EventEmitter())
 
     app.listen(process.env.PORT, () => {
         console.log(`Server started on http://localhost:${process.env.PORT}`)
