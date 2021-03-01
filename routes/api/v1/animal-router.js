@@ -17,6 +17,7 @@ const authenticateJWT = (req, res, next) => {
 
     try {
         const payload = jwt.verify(authorization[1], process.env.ACCESS_TOKEN_SECRET)
+
         req.user = {
             username: payload.username
         }
