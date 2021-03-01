@@ -13,8 +13,16 @@ const schema = new mongoose.Schema({
         minlength: [10, 'The password must be of the minimum length of 10 characters.']
     }
 }, {
+    toJSON: {
+        transform: (doc, ret) => delete ret._id,
+        virtuals: true
+    },
     timestamps: true,
     versionKey: false
+})
+
+schema.virtual('id').get(() => {
+    return this._id.toHexString()
 })
 
 schema.pre('save', async function () {
