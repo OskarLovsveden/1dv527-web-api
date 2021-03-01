@@ -44,15 +44,17 @@ const schema = new mongoose.Schema({
         type: String
     }
 }, {
-    toJSON: {
-        transform: (doc, ret) => delete ret._id,
-        virtuals: true
-    },
     timestamps: true,
-    versionKey: false
+    versionKey: false,
+    toJSON: {
+        transform: function (doc, ret) {
+            delete ret._id
+        },
+        virtuals: true
+    }
 })
 
-schema.virtual('id').get(() => {
+schema.virtual('id').get(function () {
     return this._id.toHexString()
 })
 
