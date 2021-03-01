@@ -34,20 +34,7 @@ export class AnimalController {
 
     async create(req, res, next) {
         try {
-            const animal = await Animal.insert({
-                rescuer: req.body.rescuer,
-                name: req.body.name,
-                position: {
-                    latitude: req.body.position.latitude,
-                    longitude: req.body.position.longitude
-                },
-                facility: req.body.facility,
-                city: req.body.city,
-                species: req.body.species,
-                weight: req.body.weight,
-                length: req.body.length,
-                image: req.body.image
-            })
+            const animal = await Animal.insert(this.getReqAnimalData(req))
 
             res.status(201)
             res.json(animal)
@@ -58,20 +45,7 @@ export class AnimalController {
 
     async update(req, res, next) {
         try {
-            await req.animal.update({
-                rescuer: req.body.rescuer,
-                name: req.body.name,
-                position: {
-                    latitude: req.body.position.latitude,
-                    longitude: req.body.position.longitude
-                },
-                facility: req.body.facility,
-                city: req.body.city,
-                species: req.body.species,
-                weight: req.body.weight,
-                length: req.body.length,
-                image: req.body.image
-            })
+            await req.animal.update(this.getReqAnimalData(req))
 
             res.status(204)
             res.end()
@@ -91,4 +65,20 @@ export class AnimalController {
         }
     }
 
+    async getReqAnimalData(req) {
+        return {
+            rescuer: req.body.rescuer,
+            name: req.body.name,
+            position: {
+                latitude: req.body.position.latitude,
+                longitude: req.body.position.longitude
+            },
+            facility: req.body.facility,
+            city: req.body.city,
+            species: req.body.species,
+            weight: req.body.weight,
+            length: req.body.length,
+            image: req.body.image
+        }
+    }
 }
