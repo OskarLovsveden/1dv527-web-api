@@ -5,7 +5,7 @@ export class AnimalController {
 
     async loadAnimal(req, res, next, id) {
         try {
-            const animal = Animal.getById(id)
+            const animal = await Animal.getById(id)
 
             if (!animal) {
                 next(createError(404))
@@ -25,8 +25,19 @@ export class AnimalController {
 
     async findAll(req, res, next) {
         try {
-            const animals = Animal.getAll()
-            res.json(animals)
+            const animalsDocument = await Animal.find({})
+            const animals = JSON.parse(JSON.stringify(animalsDocument))
+
+            res.json(animals.map(a => {
+                return {
+                    ...a,
+                    _links: [
+                        {
+                            rel: 'self', method: 'GET', href: `${req.protocol}://${req.get('host')}${req.originalUrl}/${a.id}`
+                        }
+                    ]
+                }
+            }))
         } catch (error) {
             next(error)
         }
@@ -67,7 +78,7 @@ export class AnimalController {
 
     async getReqAnimalData(req) {
         return {
-            rescuer: req.body.rescuer,
+            rescuer: req.user.username,
             name: req.body.name,
             position: {
                 latitude: req.body.position.latitude,
