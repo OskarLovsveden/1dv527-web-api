@@ -4,6 +4,31 @@ import { User } from '../models/User.js'
 
 export class AccountController {
 
+    async register(req, res, next) {
+        try {
+            console.log(req.body)
+            const user = await User.insert({
+                username: req.body.username,
+                password: req.body.password
+            })
+
+            res.status(201).json({ id: user.id })
+
+        } catch (error) {
+            let err = error
+
+            if (err.code === 11000) {
+                err = createError(409)
+                err.innerException = error
+            } else if (error.name === 'ValidationError') {
+                err = createError(400)
+                err.innerException = error
+            }
+
+            next(err)
+        }
+    }
+
     async login(req, res, next) {
         try {
             const user = await User.authenticate(req.body.username, req.body.password)
