@@ -14,6 +14,11 @@ const schema = new mongoose.Schema({
         type: String,
         required: true,
         unique: true
+    },
+    errorCounter: {
+        type: Number,
+        required: true,
+        default: 0,
     }
 }, {
     timestamps: true,
