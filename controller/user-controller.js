@@ -20,7 +20,49 @@ export class UserController {
     }
 
     async find(req, res, next) {
-        res.json(req.user)
+
+        const user = JSON.parse(JSON.stringify(req.user))
+
+        const data = {
+            _links: [
+                {
+                    rel: 'self', method: 'GET', href: `${req.protocol}://${req.get('host')}${req.originalUrl}/${user.id}`
+                }
+            ],
+            _embedded: {
+                ...user
+            }
+        }
+
+        res.json(data)
     }
 
+    async findAll(req, res, next) {
+        try {
+            const usersDocument = await User.find({})
+            const users = JSON.parse(JSON.stringify(usersDocument))
+
+            const data = {
+                _links: [
+                    {
+                        rel: 'self', method: 'GET', href: `${req.protocol}://${req.get('host')}${req.originalUrl}`
+                    }
+                ],
+                _embedded: users.map(u => {
+                    return {
+                        _links: [
+                            {
+                                rel: 'self', method: 'GET', href: `${req.protocol}://${req.get('host')}${req.originalUrl}/${u.id}`
+                            }
+                        ],
+                        ...u
+                    }
+                })
+            }
+
+            res.json(data)
+        } catch (error) {
+            next(error)
+        }
+    }
 }
