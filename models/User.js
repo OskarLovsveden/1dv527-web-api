@@ -12,7 +12,7 @@ const schema = new mongoose.Schema({
         required: [true, 'User password is required.'],
         minlength: [10, 'The password must be of the minimum length of 10 characters.']
     },
-    permission: {
+    type: {
         type: String,
         required: true,
         default: 'user'
