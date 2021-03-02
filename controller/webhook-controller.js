@@ -1,3 +1,4 @@
+import createError from 'http-errors'
 import { Webhook } from '../models/Webhook.js'
 
 export class WebhookController {
@@ -12,7 +13,17 @@ export class WebhookController {
             res.status(201)
             res.json(webhook)
         } catch (error) {
-            next(error)
+            let err = error
+
+            if (err.code === 11000) {
+                err = createError(409)
+                err.innerException = error
+            } else if (error.name === 'ValidationError') {
+                err = createError(400)
+                err.innerException = error
+            }
+
+            next(err)
         }
     }
 }
