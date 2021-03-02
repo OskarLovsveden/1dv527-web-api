@@ -1,10 +1,13 @@
 import { EventEmitter } from 'events'
+
 import express from 'express'
 import cors from 'cors'
 import helmet from 'helmet'
 import logger from 'morgan'
+
 import { router } from './routes/router.js'
 import { connectDB } from './config/mongoose.js'
+import { send } from './utils/webhook.js'
 
 const main = async () => {
     await connectDB()
@@ -41,8 +44,14 @@ const main = async () => {
         return res
     })
 
-    const e = new EventEmitter()
-    app.set('EventEmitter', e)
+    // Create, set and...
+    const events = new EventEmitter()
+    app.set('EventEmitter', events)
+
+    // ... listen for new animal
+    events.on('new-animal', async (data) => {
+        await send(data)
+    })
 
     app.listen(process.env.PORT, () => {
         console.log(`Server started on http://localhost:${process.env.PORT}`)
