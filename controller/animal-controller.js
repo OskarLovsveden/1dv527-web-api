@@ -28,16 +28,25 @@ export class AnimalController {
             const animalsDocument = await Animal.find({})
             const animals = JSON.parse(JSON.stringify(animalsDocument))
 
-            res.json(animals.map(a => {
-                return {
-                    ...a,
-                    _links: [
-                        {
-                            rel: 'self', method: 'GET', href: `${req.protocol}://${req.get('host')}${req.originalUrl}/${a.id}`
-                        }
-                    ]
-                }
-            }))
+            const data = {
+                _links: [
+                    {
+                        rel: 'self', method: 'GET', href: `${req.protocol}://${req.get('host')}${req.originalUrl}`
+                    }
+                ],
+                _embedded: animals.map(a => {
+                    return {
+                        _links: [
+                            {
+                                rel: 'self', method: 'GET', href: `${req.protocol}://${req.get('host')}${req.originalUrl}/${a.id}`
+                            }
+                        ],
+                        ...a
+                    }
+                })
+            }
+
+            res.json(data)
         } catch (error) {
             next(error)
         }
