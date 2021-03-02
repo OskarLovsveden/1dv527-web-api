@@ -32,7 +32,10 @@ export class AccountController {
         try {
             const user = await User.authenticate(req.body.username, req.body.password)
 
-            const payload = { username: user.username }
+            const payload = {
+                username: user.username,
+                type: user.type
+            }
 
             // Create the access token with the shorter lifespan.
             const accessToken = jwt.sign(payload, process.env.ACCESS_TOKEN_SECRET, {
