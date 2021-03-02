@@ -41,7 +41,8 @@ const main = async () => {
         return res
     })
 
-    app.set('EventEmitter', new EventEmitter())
+    const e = new EventEmitter()
+    app.set('EventEmitter', e)
 
     app.listen(process.env.PORT, () => {
         console.log(`Server started on http://localhost:${process.env.PORT}`)
