@@ -54,7 +54,12 @@ export class AnimalController {
 
     async create(req, res, next) {
         try {
-            const animal = await Animal.insert(this.getReqAnimalData(req))
+            const animal = await Animal.insert({
+                rescuer: req.user.username,
+                name: req.body.name,
+                city: req.body.city,
+                species: req.body.species
+            })
 
             // Trigger event for webhook
             const event = req.app.get('EventEmitter')
@@ -69,7 +74,12 @@ export class AnimalController {
 
     async update(req, res, next) {
         try {
-            await req.animal.update(this.getReqAnimalData(req))
+            await req.animal.update({
+                rescuer: req.user.username,
+                name: req.body.name,
+                city: req.body.city,
+                species: req.body.species
+            })
 
             res.status(204)
             res.end()
@@ -86,15 +96,6 @@ export class AnimalController {
             res.end()
         } catch (error) {
             next(error)
-        }
-    }
-
-    async getReqAnimalData(req) {
-        return {
-            rescuer: req.user.username,
-            name: req.body.name,
-            city: req.body.city,
-            species: req.body.species
         }
     }
 }
