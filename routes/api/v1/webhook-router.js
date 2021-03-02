@@ -28,18 +28,5 @@ const authenticateJWT = (req, res, next) => {
     }
 }
 
-// listen for webhook event
-const listen = (req, res, next) => {
-    const event = req.app.get('EventEmitter')
-    event.on('new-animal', (data) => {
-        console.log(data)
-    })
-    next()
-}
-
 // POST webhooks - add webhook
-router.post('/',
-    authenticateJWT,
-    (req, res, next) => listen(req, res, next),
-    (req, res, next) => controller.create(req, res, next)
-)
+router.post('/', authenticateJWT, (req, res, next) => controller.create(req, res, next))
