@@ -20,7 +20,20 @@ export class AnimalController {
     }
 
     async find(req, res, next) {
-        res.json(req.animal)
+        const animal = JSON.parse(JSON.stringify(req.animal))
+
+        const data = {
+            _links: [
+                {
+                    rel: 'self', method: 'GET', href: `${req.protocol}://${req.get('host')}${req.originalUrl}/${animal.id}`
+                }
+            ],
+            _embedded: {
+                ...animal
+            }
+        }
+
+        res.json(data)
     }
 
     async findAll(req, res, next) {
