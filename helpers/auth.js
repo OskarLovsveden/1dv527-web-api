@@ -13,7 +13,8 @@ export const authenticateJWT = (req, res, next) => {
         const payload = jwt.verify(authorization[1], process.env.ACCESS_TOKEN_SECRET)
 
         req.user = {
-            username: payload.username
+            username: payload.username,
+            type: payload.type
         }
 
         next()
