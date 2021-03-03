@@ -24,9 +24,8 @@ export class UserController {
 
         const data = {
             _links: [
-                {
-                    rel: 'self', method: 'GET', href: `${req.protocol}://${req.get('host')}${req.originalUrl}`
-                }
+                { rel: 'self', method: 'GET', href: `${req.protocol}://${req.get('host')}${req.originalUrl}` },
+                { rel: 'delete', method: 'DELETE', href: `${req.protocol}://${req.get('host')}${req.originalUrl}` }
             ],
             _embedded: req.user?.type === 'admin' ? { ...user } : { username: user.username, type: user.type }
         }
@@ -41,16 +40,12 @@ export class UserController {
 
             const data = {
                 _links: [
-                    {
-                        rel: 'self', method: 'GET', href: `${req.protocol}://${req.get('host')}${req.originalUrl}`
-                    }
+                    { rel: 'self', method: 'GET', href: `${req.protocol}://${req.get('host')}${req.originalUrl}` }
                 ],
                 _embedded: users.map(u => {
                     return {
                         _links: [
-                            {
-                                rel: 'self', method: 'GET', href: `${req.protocol}://${req.get('host')}${req.originalUrl}/${u.id}`
-                            }
+                            { rel: 'self', method: 'GET', href: `${req.protocol}://${req.get('host')}${req.originalUrl}/${u.id}` }
                         ],
                         ...req.user?.type === 'admin' ? { ...u } : { username: u.username, type: u.type }
                     }
