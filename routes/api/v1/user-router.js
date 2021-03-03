@@ -16,5 +16,10 @@ router.get('/:id',
 
 router.get('/',
     authenticateJWT,
-    (req, res, next) => hasPermission(req, res, next, PermissionLevels.ADMIN),
+    (req, res, next) => hasPermission(req, res, next, PermissionLevels.READ),
     (req, res, next) => controller.findAll(req, res, next))
+
+router.delete('/:id',
+    authenticateJWT,
+    (req, res, next) => hasPermission(req, res, next, PermissionLevels.DELETE),
+    (req, res, next) => controller.delete(req, res, next))
