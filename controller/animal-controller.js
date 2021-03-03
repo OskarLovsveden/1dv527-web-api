@@ -1,5 +1,6 @@
 import createError from 'http-errors'
 import { Animal } from '../models/Animal.js'
+import { sendToWebhookSubscribers } from '../utils/webhook.js'
 
 export class AnimalController {
 
@@ -43,16 +44,12 @@ export class AnimalController {
 
             const data = {
                 _links: [
-                    {
-                        rel: 'self', method: 'GET', href: `${req.protocol}://${req.get('host')}${req.originalUrl}`
-                    }
+                    { rel: 'self', method: 'GET', href: `${req.protocol}://${req.get('host')}${req.originalUrl}` }
                 ],
                 _embedded: animals.map(a => {
                     return {
                         _links: [
-                            {
-                                rel: 'self', method: 'GET', href: `${req.protocol}://${req.get('host')}${req.originalUrl}/${a.id}`
-                            }
+                            { rel: 'self', method: 'GET', href: `${req.protocol}://${req.get('host')}${req.originalUrl}/${a.id}` }
                         ],
                         ...a
                     }
@@ -74,12 +71,16 @@ export class AnimalController {
                 species: req.body.species
             })
 
-            // Trigger event for webhook
-            const event = req.app.get('EventEmitter')
-            event.emit('new-animal', animal)
+            // Send animal to webhook subscribers
+            sendToWebhookSubscribers(animal)
 
             res.status(201)
-            res.json(animal)
+            res.json({
+                _links: [
+                    { rel: 'self', method: 'GET', href: `${req.protocol}://${req.get('host')}${req.originalUrl}/${animal.id}` }
+                ],
+                _embedded: { ...JSON.parse(JSON.stringify(animal)) }
+            })
         } catch (error) {
             let err = error
 
