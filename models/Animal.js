@@ -34,7 +34,9 @@ schema.virtual('id').get(function () {
 })
 
 schema.statics.getById = async function (id) {
-    return this.findOne({ _id: id });
+    if (id.match(/^[0-9a-fA-F]{24}$/)) {
+        return this.findOne({ _id: id })
+    }
 }
 
 schema.statics.insert = async function (animalData) {
