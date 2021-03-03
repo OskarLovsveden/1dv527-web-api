@@ -1,10 +1,19 @@
+[[_TOC_]]
+
 ## Instructions
+
+### Deployment
 
 The API is deplyed at: [https://ol222hf-web-api.herokuapp.com/api/v1](https://ol222hf-web-api.herokuapp.com/api/v1)
 The application may need some time to start up as Heroku has a sleep mode. I would recommend visiting this URL once manually to make sure the server is "awake".
 
+### Documentation / Endpoints
+
 All endpoints and HTTP methods used are specified in [the documentation.](Lovsveden_API_Documentation.txt)
 
+### Postman
+
+[Postman Collection](1dv527_web_api.postman_collection.json)<br>
 When loading my Postman collection you'll see that I've structured all my tests by folders. The way it is meant to be tested is that you select a folder and run all the tests inside that folder all at once as a suite. Most data used/found during tests is stored in collection variables.
 
 There are two users in the system by default:
