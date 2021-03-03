@@ -23,11 +23,11 @@ export class UserController {
         const user = JSON.parse(JSON.stringify(req.userData))
 
         const data = {
-            _links: [
-                { rel: 'self', method: 'GET', href: `${req.protocol}://${req.get('host')}${req.originalUrl}` },
-                { rel: 'delete', method: 'DELETE', href: `${req.protocol}://${req.get('host')}${req.originalUrl}` }
-            ],
-            _embedded: req.user?.type === 'admin' ? { ...user } : { username: user.username, type: user.type }
+            _links: {
+                self: { method: 'GET', href: `${req.protocol}://${req.get('host')}${req.originalUrl}` },
+                delete: { method: 'DELETE', href: `${req.protocol}://${req.get('host')}${req.originalUrl}` }
+            },
+            _embedded: { ...user }
         }
 
         res.json(data)
@@ -39,17 +39,18 @@ export class UserController {
             const users = JSON.parse(JSON.stringify(usersDocument))
 
             const data = {
-                _links: [
-                    { rel: 'self', method: 'GET', href: `${req.protocol}://${req.get('host')}${req.originalUrl}` }
-                ],
-                _embedded: users.map(u => {
-                    return {
-                        _links: [
-                            { rel: 'self', method: 'GET', href: `${req.protocol}://${req.get('host')}${req.originalUrl}/${u.id}` }
-                        ],
-                        ...req.user?.type === 'admin' ? { ...u } : { username: u.username, type: u.type }
-                    }
-                })
+                _links: { rel: 'self', method: 'GET', href: `${req.protocol}://${req.get('host')}${req.originalUrl}` },
+                _embedded: {
+                    users: users.map(u => {
+                        return {
+                            _links: {
+                                self: { method: 'GET', href: `${req.protocol}://${req.get('host')}${req.originalUrl}/${u.id}` },
+                                delete: { method: 'DELETE', href: `${req.protocol}://${req.get('host')}${req.originalUrl}/${u.id}` }
+                            },
+                            ...u
+                        }
+                    })
+                }
             }
 
             res.json(data)

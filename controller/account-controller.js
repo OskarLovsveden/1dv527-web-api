@@ -9,13 +9,13 @@ export class AccountController {
             const user = await User.insert({
                 username: req.body.username,
                 password: req.body.password,
-                type: req.body.type || 'user'
+                type: 'user'
             })
 
             const data = {
-                _links: [
-                    { rel: 'login', method: 'POST', href: `${req.protocol}://${req.get('host')}${req.baseUrl}/login` }
-                ],
+                _links: {
+                    login: { method: 'POST', href: `${req.protocol}://${req.get('host')}${req.baseUrl}/login` }
+                },
                 _embedded: { id: user.id }
             }
 
@@ -54,9 +54,9 @@ export class AccountController {
             // Create the refresh token with the longer lifespan.
 
             const data = {
-                _links: [
-                    { rel: 'api/v1', method: 'GET', href: `${req.protocol}://${req.get('host')}${req.baseUrl}` }
-                ],
+                _links: {
+                    api_v1: { method: 'GET', href: `${req.protocol}://${req.get('host')}${req.baseUrl}` }
+                },
                 _embedded: {
                     access_token: accessToken
                     // refresh_token: refreshToken

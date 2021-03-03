@@ -24,11 +24,11 @@ export class AnimalController {
         const animal = JSON.parse(JSON.stringify(req.animal))
 
         const data = {
-            _links: [
-                { rel: 'self', method: 'GET', href: `${req.protocol}://${req.get('host')}${req.originalUrl}` },
-                { rel: 'update', method: 'PUT', href: `${req.protocol}://${req.get('host')}${req.originalUrl}` },
-                { rel: 'delete', method: 'DELETE', href: `${req.protocol}://${req.get('host')}${req.originalUrl}` }
-            ],
+            _links: {
+                self: { method: 'GET', href: `${req.protocol}://${req.get('host')}${req.originalUrl}` },
+                update: { method: 'PUT', href: `${req.protocol}://${req.get('host')}${req.originalUrl}` },
+                delete: { method: 'DELETE', href: `${req.protocol}://${req.get('host')}${req.originalUrl}` }
+            },
             _embedded: {
                 ...animal
             }
@@ -43,18 +43,22 @@ export class AnimalController {
             const animals = JSON.parse(JSON.stringify(animalsDocument))
 
             const data = {
-                _links: [
-                    { rel: 'self', method: 'GET', href: `${req.protocol}://${req.get('host')}${req.originalUrl}` },
-                    { rel: 'create', method: 'POST', href: `${req.protocol}://${req.get('host')}${req.originalUrl}` }
-                ],
-                _embedded: animals.map(a => {
-                    return {
-                        _links: [
-                            { rel: 'self', method: 'GET', href: `${req.protocol}://${req.get('host')}${req.originalUrl}/${a.id}` }
-                        ],
-                        ...a
-                    }
-                })
+                _links: {
+                    self: { method: 'GET', href: `${req.protocol}://${req.get('host')}${req.originalUrl}` },
+                    create: { method: 'POST', href: `${req.protocol}://${req.get('host')}${req.originalUrl}` }
+                },
+                _embedded: {
+                    animals: animals.map(a => {
+                        return {
+                            _links: {
+                                self: { method: 'GET', href: `${req.protocol}://${req.get('host')}${req.originalUrl}/${a.id}` },
+                                update: { method: 'PUT', href: `${req.protocol}://${req.get('host')}${req.originalUrl}/${a.id}` },
+                                delete: { method: 'DELETE', href: `${req.protocol}://${req.get('host')}${req.originalUrl}/${a.id}` },
+                            },
+                            ...a
+                        }
+                    })
+                }
             }
 
             res.json(data)
@@ -77,11 +81,11 @@ export class AnimalController {
 
             res.status(201)
             res.json({
-                _links: [
-                    { rel: 'self', method: 'GET', href: `${req.protocol}://${req.get('host')}${req.originalUrl}/${animal.id}` },
-                    { rel: 'update', method: 'PUT', href: `${req.protocol}://${req.get('host')}${req.originalUrl}/${animal.id}` },
-                    { rel: 'delete', method: 'DELETE', href: `${req.protocol}://${req.get('host')}${req.originalUrl}/${animal.id}` }
-                ],
+                _links: {
+                    self: { method: 'GET', href: `${req.protocol}://${req.get('host')}${req.originalUrl}/${animal.id}` },
+                    update: { method: 'PUT', href: `${req.protocol}://${req.get('host')}${req.originalUrl}/${animal.id}` },
+                    delete: { method: 'DELETE', href: `${req.protocol}://${req.get('host')}${req.originalUrl}/${animal.id}` }
+                },
                 _embedded: { ...JSON.parse(JSON.stringify(animal)) }
             })
         } catch (error) {
