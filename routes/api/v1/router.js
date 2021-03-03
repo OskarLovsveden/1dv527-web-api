@@ -14,19 +14,19 @@ const root = (req, res) => {
                 rel: 'self', method: 'GET', href: `${req.protocol}://${req.get('host')}${req.originalUrl}`
             },
             {
-                rel: 'self', method: 'GET', href: `${req.protocol}://${req.get('host')}${req.originalUrl}register`
+                rel: 'self', method: 'GET', href: `${req.protocol}://${req.get('host')}${req.originalUrl}/register`
             },
             {
-                rel: 'self', method: 'GET', href: `${req.protocol}://${req.get('host')}${req.originalUrl}login`
+                rel: 'self', method: 'GET', href: `${req.protocol}://${req.get('host')}${req.originalUrl}/login`
             },
             {
-                rel: 'users', method: 'GET', href: `${req.protocol}://${req.get('host')}${req.originalUrl}users`
+                rel: 'users', method: 'GET', href: `${req.protocol}://${req.get('host')}${req.originalUrl}/users`
             },
             {
-                rel: 'animals', method: 'GET', href: `${req.protocol}://${req.get('host')}${req.originalUrl}animals`
+                rel: 'animals', method: 'GET', href: `${req.protocol}://${req.get('host')}${req.originalUrl}/animals`
             },
             {
-                rel: 'webhooks', method: 'GET', href: `${req.protocol}://${req.get('host')}${req.originalUrl}webhooks`
+                rel: 'webhooks', method: 'GET', href: `${req.protocol}://${req.get('host')}${req.originalUrl}/webhooks`
             }
         ],
         _embedded: { message: 'Lovsveden API v1' }
