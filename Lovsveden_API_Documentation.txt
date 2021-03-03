@@ -22,6 +22,7 @@ DELETE /animals/:id - Delete one specific animal based on param :id | Authorized
 
 # Webhooks
 POST /webhooks - Add url to send updates to. This happens everytime a new animal is added to the database | Authorized: admins, users
+DELETE /webhooks/:id - Delete one specific webhook based on param :id | Authorized: admins
 
 # Not Found
 GET /* - All other paths where * represents anything not mentioned above. This results in status code 404 | Authorized: no restrictions
