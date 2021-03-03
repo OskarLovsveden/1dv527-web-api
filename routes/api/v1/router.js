@@ -1,4 +1,5 @@
 import express from 'express'
+
 import { router as accountRouter } from './account-router.js'
 import { router as userRouter } from './user-router.js'
 import { router as animalRouter } from './animal-router.js'
@@ -11,6 +12,12 @@ const root = (req, res) => {
         _links: [
             {
                 rel: 'self', method: 'GET', href: `${req.protocol}://${req.get('host')}${req.originalUrl}`
+            },
+            {
+                rel: 'self', method: 'GET', href: `${req.protocol}://${req.get('host')}${req.originalUrl}register`
+            },
+            {
+                rel: 'self', method: 'GET', href: `${req.protocol}://${req.get('host')}${req.originalUrl}login`
             },
             {
                 rel: 'users', method: 'GET', href: `${req.protocol}://${req.get('host')}${req.originalUrl}users`
