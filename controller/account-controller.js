@@ -12,7 +12,15 @@ export class AccountController {
                 type: req.body.type || 'user'
             })
 
-            res.status(201).json({ id: user.id })
+            const data = {
+                _links: [
+                    { rel: 'login', method: 'POST', href: `${req.protocol}://${req.get('host')}${req.baseUrl}/login` }
+                ],
+                _embedded: { id: user.id }
+            }
+
+            res.status(201)
+            res.json(data)
 
         } catch (error) {
             let err = error
