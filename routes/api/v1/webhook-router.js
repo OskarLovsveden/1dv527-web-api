@@ -6,5 +6,4 @@ export const router = express.Router()
 
 const controller = new WebhookController()
 
-// POST add webhook
 router.post('/', authenticateJWT, (req, res, next) => controller.create(req, res, next))
