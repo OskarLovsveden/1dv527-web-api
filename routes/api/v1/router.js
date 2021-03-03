@@ -9,27 +9,15 @@ export const router = express.Router()
 
 const root = (req, res) => {
     res.json({
-        _links: [
-            {
-                rel: 'self', method: 'GET', href: `${req.protocol}://${req.get('host')}${req.originalUrl}`
-            },
-            {
-                rel: 'self', method: 'GET', href: `${req.protocol}://${req.get('host')}${req.originalUrl}/register`
-            },
-            {
-                rel: 'self', method: 'GET', href: `${req.protocol}://${req.get('host')}${req.originalUrl}/login`
-            },
-            {
-                rel: 'users', method: 'GET', href: `${req.protocol}://${req.get('host')}${req.originalUrl}/users`
-            },
-            {
-                rel: 'animals', method: 'GET', href: `${req.protocol}://${req.get('host')}${req.originalUrl}/animals`
-            },
-            {
-                rel: 'webhooks', method: 'GET', href: `${req.protocol}://${req.get('host')}${req.originalUrl}/webhooks`
-            }
-        ],
-        _embedded: { message: 'Lovsveden API v1' }
+        _links: {
+            self: { method: 'GET', href: `${req.protocol}://${req.get('host')}${req.originalUrl}` },
+            register: { method: 'POST', href: `${req.protocol}://${req.get('host')}${req.originalUrl}/register` },
+            login: { method: 'POST', href: `${req.protocol}://${req.get('host')}${req.originalUrl}/login` },
+            users: { method: 'GET', href: `${req.protocol}://${req.get('host')}${req.originalUrl}/users` },
+            animals: { method: 'GET', href: `${req.protocol}://${req.get('host')}${req.originalUrl}/animals` },
+            webhooks: { method: 'POST', href: `${req.protocol}://${req.get('host')}${req.originalUrl}/webhooks` }
+        },
+        _embedded: { message: 'Lovsveden API v1 - Welcome!' }
     })
 }
 
