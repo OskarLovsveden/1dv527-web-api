@@ -1,3 +1,5 @@
+// Inspired by - https://gitlab.lnu.se/1dv026/content/examples/example-restful-tasks-with-jwt/-/tree/master/
+
 import express from 'express'
 import { AnimalController } from '../../../controller/animal-controller.js'
 import { authenticateJWT } from '../../../helpers/auth.js'

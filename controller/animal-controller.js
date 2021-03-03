@@ -1,3 +1,5 @@
+// Inspired by - https://gitlab.lnu.se/1dv026/content/examples/example-restful-tasks-with-jwt/-/tree/master/
+
 import createError from 'http-errors'
 import { Animal } from '../models/Animal.js'
 import { sendToWebhookSubscribers } from '../utils/webhook.js'
