@@ -1,7 +1,7 @@
 import { Webhook } from '../models/Webhook.js'
 import axios from 'axios'
 
-export const send = async (data) => {
+export const sendToWebhookSubscribers = async (data) => {
 
     const webhooks = await Webhook.find({})
 
