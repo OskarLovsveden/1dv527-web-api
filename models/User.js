@@ -5,7 +5,8 @@ const schema = new mongoose.Schema({
     username: {
         type: String,
         required: [true, 'Username is required.'],
-        unique: true
+        unique: true,
+        trim: true
     },
     password: {
         type: String,
@@ -48,7 +49,9 @@ schema.statics.authenticate = async function (username, password) {
 }
 
 schema.statics.getById = async function (id) {
-    return this.findOne({ _id: id })
+    if (id.match(/^[0-9a-fA-F]{24}$/)) {
+        return this.findOne({ _id: id })
+    }
 }
 
 schema.statics.insert = async function (userData) {
