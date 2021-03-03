@@ -4,8 +4,7 @@ export const PermissionLevels = Object.freeze({
     CREATE: ['admin'],
     READ: ['admin', 'user'],
     UPDATE: ['admin'],
-    DELETE: ['admin'],
-    ADMIN: ['admin']
+    DELETE: ['admin']
 })
 
 export const hasPermission = (req, res, next, permissionLevel) => {
