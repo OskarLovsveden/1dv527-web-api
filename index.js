@@ -27,10 +27,10 @@ const main = async () => {
                 .json({
                     status: err.status,
                     message: err.message,
-                    _links: [
-                        { rel: 'erroneous path', method: 'GET', href: `${req.protocol}://${req.get('host')}${req.originalUrl}` },
-                        { rel: 'api/v1', method: 'GET', href: `${req.protocol}://${req.get('host')}${req.baseUrl}` }
-                    ]
+                    _links: {
+                        erroneous_path: { method: 'GET', href: `${req.protocol}://${req.get('host')}${req.originalUrl}` },
+                        api_v1: { method: 'GET', href: `${req.protocol}://${req.get('host')}${req.baseUrl}/api/v1` }
+                    }
                 })
             return
         }
@@ -41,7 +41,11 @@ const main = async () => {
                 status: err.status,
                 message: err.message,
                 innerException: err.innerException,
-                stack: err.stack
+                stack: err.stack,
+                _links: {
+                    erroneous_path: { method: 'GET', href: `${req.protocol}://${req.get('host')}${req.originalUrl}` },
+                    api_v1: { method: 'GET', href: `${req.protocol}://${req.get('host')}${req.baseUrl}/api/v1` }
+                }
             })
     })
 
