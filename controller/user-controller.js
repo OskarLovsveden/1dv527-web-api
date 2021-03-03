@@ -11,7 +11,7 @@ export class UserController {
                 return
             }
 
-            req.user = user
+            req.userData = user
 
             next()
         } catch (error) {
@@ -20,18 +20,15 @@ export class UserController {
     }
 
     async find(req, res, next) {
-
-        const user = JSON.parse(JSON.stringify(req.user))
+        const user = JSON.parse(JSON.stringify(req.userData))
 
         const data = {
             _links: [
                 {
-                    rel: 'self', method: 'GET', href: `${req.protocol}://${req.get('host')}${req.originalUrl}/${user.id}`
+                    rel: 'self', method: 'GET', href: `${req.protocol}://${req.get('host')}${req.originalUrl}`
                 }
             ],
-            _embedded: {
-                ...user
-            }
+            _embedded: req.user?.type === 'admin' ? { ...user } : { username: user.username, type: user.type }
         }
 
         res.json(data)
