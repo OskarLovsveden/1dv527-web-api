@@ -1,5 +1,27 @@
-List your resource URIs and their corresponding brief descriptions.
-If you have an URI being used with multiple HTTP methods, you need to describe each pair of HTTP METHOD : URI separately.
+# Deployment
+https://ol222hf-web-api.herokuapp.com
 
-For example:
-If you have a resource URI as www.example.com/fish/types and you have HTTP methods GET, PUT, and DELETE to perform something on that resource, you need to briefly describe each pair of Method and URI, e.g., what GET www.example.com/fish/types does, what PUT www.example.com/fish/types does, what DELETE www.example.com/fish/types does, and so on.
+# Start
+GET /api/v1/ - Starting point of the API
+
+# Account
+POST /register - Register a user | Authorized: no restrictions
+POST /login - Login a user | Authorized: no restrictions
+
+# Users
+GET /users - Get all users | Authorized: admins
+GET /users/:id - Get one specific user based on param :id | Authorized: admins
+DELETE /users/:id - Delete one specific user based on param :id | Authorized: admins
+
+# Animals
+GET /animals - Get all animals | Authorized: admins, users
+GET /animals/:id - Getone specific animal based on param :id | Authorized: admins, users
+POST /animals - Create/add a new animal | Authorized: admins
+PUT /animals/:id - Update one specific animal based on param :id | Authorized: admins
+DELETE /animals/:id - Delete one specific animal based on param :id | Authorized: admins
+
+# Webhooks
+POST /webhooks - Add url to send updates to. This happens everytime a new animal is added to the database | Authorized: admins, users
+
+# Not Found
+GET /* - All other paths where * represents anything not mentioned above. This results in status code 404 | Authorized: no restrictions
