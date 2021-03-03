@@ -52,12 +52,23 @@ export class UserController {
                                 rel: 'self', method: 'GET', href: `${req.protocol}://${req.get('host')}${req.originalUrl}/${u.id}`
                             }
                         ],
-                        ...u
+                        ...req.user?.type === 'admin' ? { ...u } : { username: u.username, type: u.type }
                     }
                 })
             }
 
             res.json(data)
+        } catch (error) {
+            next(error)
+        }
+    }
+
+    async delete(req, res, next) {
+        try {
+            await req.userData.delete()
+
+            res.status(204)
+            res.end()
         } catch (error) {
             next(error)
         }
