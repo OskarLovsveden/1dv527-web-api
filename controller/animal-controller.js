@@ -72,7 +72,7 @@ export class AnimalController {
                 species: req.body.species
             })
 
-            // Send animal to webhook subscribers
+            // Send animal-data to webhook subscribers
             sendToWebhookSubscribers(animal)
 
             res.status(201)
