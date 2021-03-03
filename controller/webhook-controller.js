@@ -2,6 +2,22 @@ import createError from 'http-errors'
 import { Webhook } from '../models/Webhook.js'
 
 export class WebhookController {
+    async loadWebhook(req, res, next, id) {
+        try {
+            const webhook = await Webhook.getById(id)
+
+            if (!webhook) {
+                next(createError(404))
+                return
+            }
+
+            req.webhook = webhook
+            next()
+        } catch (error) {
+            next(error)
+        }
+    }
+
     async create(req, res, next) {
         try {
             const webhook = await Webhook.insert({
@@ -24,6 +40,17 @@ export class WebhookController {
             }
 
             next(err)
+        }
+    }
+
+    async delete(req, res, next) {
+        try {
+            await req.webhook.delete()
+
+            res.status(204)
+            res.end()
+        } catch (error) {
+            next(error)
         }
     }
 }
