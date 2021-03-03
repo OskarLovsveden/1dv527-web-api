@@ -23,6 +23,7 @@ const schema = new mongoose.Schema({
     toJSON: {
         transform: function (doc, ret) {
             delete ret._id
+            delete ret.password
         },
         virtuals: true
     }
