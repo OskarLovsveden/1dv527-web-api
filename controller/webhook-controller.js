@@ -27,8 +27,6 @@ export class WebhookController {
             })
 
             res.status(201)
-            res.json(webhook)
-
             res.json({
                 _links: { delete: { method: 'DELETE', href: `${req.protocol}://${req.get('host')}${req.originalUrl}/${webhook.id}` } },
                 _embedded: { ...JSON.parse(JSON.stringify(webhook)) }
