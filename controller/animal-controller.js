@@ -81,7 +81,17 @@ export class AnimalController {
             res.status(201)
             res.json(animal)
         } catch (error) {
-            next(error)
+            let err = error
+
+            if (err.code === 11000) {
+                err = createError(409)
+                err.innerException = error
+            } else if (error.name === 'ValidationError') {
+                err = createError(400)
+                err.innerException = error
+            }
+
+            next(err)
         }
     }
 
@@ -97,7 +107,14 @@ export class AnimalController {
             res.status(204)
             res.end()
         } catch (error) {
-            next(error)
+            let err = error
+
+            if (error.name === 'ValidationError') {
+                err = createError(400)
+                err.innerException = error
+            }
+
+            next(err)
         }
     }
 
