@@ -26,7 +26,11 @@ const main = async () => {
                 .status(err.status)
                 .json({
                     status: err.status,
-                    message: err.message
+                    message: err.message,
+                    _links: [
+                        { rel: 'erroneous path', method: 'GET', href: `${req.protocol}://${req.get('host')}${req.originalUrl}` },
+                        { rel: 'api/v1', method: 'GET', href: `${req.protocol}://${req.get('host')}${req.baseUrl}` }
+                    ]
                 })
             return
         }
