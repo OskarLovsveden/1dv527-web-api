@@ -8,7 +8,8 @@ export class AccountController {
         try {
             const user = await User.insert({
                 username: req.body.username,
-                password: req.body.password
+                password: req.body.password,
+                type: req.body.type || 'user'
             })
 
             res.status(201).json({ id: user.id })
