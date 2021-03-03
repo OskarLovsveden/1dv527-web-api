@@ -25,7 +25,7 @@ export class AnimalController {
         const data = {
             _links: [
                 {
-                    rel: 'self', method: 'GET', href: `${req.protocol}://${req.get('host')}${req.originalUrl}/${animal.id}`
+                    rel: 'self', method: 'GET', href: `${req.protocol}://${req.get('host')}${req.originalUrl}`
                 }
             ],
             _embedded: {
