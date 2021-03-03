@@ -4,12 +4,11 @@ export const PermissionLevels = Object.freeze({
     CREATE: ['admin'],
     READ: ['admin', 'user'],
     UPDATE: ['admin'],
-    DELETE: ['admin']
+    DELETE: ['admin'],
+    ADMIN: ['admin']
 })
 
 export const hasPermission = (req, res, next, permissionLevel) => {
-    console.log(req.user?.type)
-
     if (permissionLevel.includes(req.user?.type)) {
         next()
     }
